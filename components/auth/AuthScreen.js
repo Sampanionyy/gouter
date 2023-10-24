@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import jsonUsers from '../../assets/json/users.json';
 import { useNavigation } from '@react-navigation/native'; // Importez useNavigation
 
-function AuthScreen() {
+function AuthScreen({navigation}) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 	const users = jsonUsers;
-	const navigation = useNavigation();
+	// const navigation = useNavigation();
 
     const handleUsernameChange = (text) => {
     	setUsername(text);
@@ -22,12 +22,24 @@ function AuthScreen() {
 		users.map((user) => {
 			if (username === user.username && password === user.password) {
 				// Authentification réussie, effectuez une action (redirection, etc.)
-				check = 1;
+				check == 1;
+
+				if(user.type == 1) { //Medecin
+					navigation.navigate('MedecinHomeScreen', { user: user.username });
+				}
+				else if (user.type == 2) {
+					navigation.navigate('PatientHomeScreen', user);
+				}
+
 			}
 		});
 
 		check ? console.log('Authentification réussie') : console.log('Authentification échouée');
-		check ? navigation.navigate('Home', {username}) : "";
+    };
+
+	const handleLinkPress = () => {
+        // Vous pouvez utiliser navigation.navigate pour naviguer vers une autre vue
+        navigation.navigate('RegisterScreen');
     };
 
     return (
@@ -47,6 +59,9 @@ function AuthScreen() {
 				secureTextEntry={true} // Pour masquer le mot de passe
 			/>
 			<Button title="Se connecter" onPress={handleLogin} />
+			<TouchableOpacity onPress={handleLinkPress}>
+				<Text style={styles.notHavingAccount}>Je n'ai pas encore de compte</Text>
+			</TouchableOpacity>
 		</View>
     );
 }
@@ -69,6 +84,10 @@ const styles = StyleSheet.create({
 		marginBottom: 12,
 		paddingHorizontal: 8,
 	},
+	notHavingAccount: {
+        alignSelf: 'center',
+        marginTop: 5,
+    },
 	// container: {
 	// 	width: 60,
 	// 	display: 'flex',

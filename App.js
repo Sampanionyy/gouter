@@ -6,6 +6,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './components/HomeScreen';
 import AuthScreen from './components/auth/AuthScreen';
 import RegisterScreen from './components/auth/RegisterScreen';
+import MedecinHomeScreen from './components/medecin/MedecinHomeScreen';
+import DisponibiliteScreen from './components/medecin/DisponibiliteScreen';
+import PatientHomeScreen from './components/patient/PatientHomeScreen';
+import Menu from './components/medecin/MenuMedecin';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +20,10 @@ function App() {
 				<Stack.Screen name="Home" component={HomeScreen} />
 				<Stack.Screen name="AuthScreen" component={AuthScreen} />
 				<Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+				<Stack.Screen name="MedecinHomeScreen" component={MedecinHomeScreen} />
+				<Stack.Screen name="DisponibiliteScreen" component={DisponibiliteScreen} />
+				<Stack.Screen name="PatientHomeScreen" component={PatientHomeScreen} />
+				<Stack.Screen name="Menu" component={Menu} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

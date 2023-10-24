@@ -1,27 +1,39 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
-export default function RegisterScreen() {
+export default function RegisterScreen({navigation }) {
     const [utilisateur, setUtilisateur] = useState({
+        id: 1,
         name: '',
         email: '',
         username: '',
         password: '',
+        type: null
     });
     const handleChange = (text, champ) => {
         //ici
         setUtilisateur({...utilisateur, [champ]: text})
     };
 
-    const handleRegister = () => {
-        // Vous pouvez utiliser l'objet utilisateur ici pour soumettre les données.
+    const handleRegister = async () => {
+        // Vous pouvez utiliser l'objet utilisateur ici pour soumettre le
         console.log('Utilisateur enregistré :', utilisateur);
-      };
+        if (utilisateur.type == 1) navigation.navigate('MedecinHomeScreen', { utilisateur });
+        else navigation.navigate('PatientHomeScreen', { utilisateur });
+    };
     
+    const handleLinkPress = () => {
+        // Vous pouvez utiliser navigation.navigate pour naviguer vers une autre vue
+        navigation.navigate('AuthScreen');
+    };
+
     return (
-        <View>
-            <Text>Inscription</Text>
+        <View style={styles.container}>
+			<Text style={styles.header}>Inscription</Text>
+
             <TextInput
+                style={styles.input}
                 placeholder='Nom'
                 value={utilisateur.name}
                 onChangeText={(text) => handleChange(text, 'name')}
@@ -29,14 +41,15 @@ export default function RegisterScreen() {
             </TextInput>
 
             <TextInput
+                style={styles.input}
                 placeholder='Email'
                 value={utilisateur.email}
                 onChangeText={(text) => handleChange(text, 'email')}
-
             >
             </TextInput>
 
             <TextInput
+                style={styles.input}
                 placeholder='Pseudo'
                 value={utilisateur.username}
                 onChangeText={(text) => handleChange(text, 'username')}
@@ -44,15 +57,60 @@ export default function RegisterScreen() {
             </TextInput>
 
             <TextInput
+                style={styles.input}
                 placeholder='Mot de passe'
                 value={utilisateur.password}
                 onChangeText={(text) => handleChange(text, 'password')}
 				secureTextEntry={true} // Pour masquer le mot de passe
             >
-
             </TextInput>
+            <Picker
+                selectedValue={utilisateur.type}
+                onValueChange={(itemValue, itemIndex) => handleChange(itemValue, 'type')}
+            >
+                <Picker.Item label="Medecin" value="1"/>
+                <Picker.Item label="Patient" value="2"/>
+            </Picker>
     
             <Button title="S'inscrire" onPress={handleRegister}></Button>
+
+            <TouchableOpacity onPress={handleLinkPress}>
+                <Text style={styles.havingAccount}>J'ai déjà un compte</Text>
+            </TouchableOpacity>
         </View>
     )
 }
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		// justifyContent: 'center',
+		padding: 16,
+	},
+	header: {
+		fontSize: 24,
+		marginBottom: 16,
+		alignSelf: 'center',
+	},
+    havingAccount: {
+        alignSelf: 'center',
+        marginTop: 5,
+    },
+	input: {
+		height: 40,
+		borderColor: 'gray',
+		borderWidth: 1,
+		marginBottom: 12,
+		paddingHorizontal: 8,
+	},
+	// container: {
+	// 	width: 60,
+	// 	display: 'flex',
+	// 	justifyContent: 'center',
+	// 	margin: 'auto',
+	// 	boxShadow: '1px 1px 5px grey',
+	// 	paddingTop: '1rem',
+	// 	marginTop: '1rem',
+	// 	marginBottom: '1rem'
+	// }
+});
+
