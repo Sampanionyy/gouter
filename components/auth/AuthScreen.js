@@ -3,10 +3,11 @@ import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'rea
 import jsonUsers from '../../assets/json/users.json';
 import { useNavigation } from '@react-navigation/native'; // Importez useNavigation
 
-function AuthScreen({navigation, pseudo}) {
+function AuthScreen({route, navigation}) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 	const users = jsonUsers;
+	const utilisateur = route.params.utilisateur;
 	// const navigation = useNavigation();
 
     const handleUsernameChange = (text) => {
@@ -20,10 +21,15 @@ function AuthScreen({navigation, pseudo}) {
     const handleLogin = () => {
 		let check = 0;
 
-		console.log(pseudo+"ee")
-		// if(username == utilisateur.username) {
-		// 	console.log("tafiditra")
-		// }
+		// console.log(utilisateur)
+		if(username == utilisateur.username && password === utilisateur.password) {
+			console.log("tafiditra")
+			navigation.navigate('Home', { utilisateur: utilisateur });
+			check = 1;
+		}
+		else {
+			console.log("misy olana")
+		}
 		// users.map((user) => {
 		// 	if (username === user.username && password === user.password) {
 		// 		// Authentification réussie, effectuez une action (redirection, etc.)

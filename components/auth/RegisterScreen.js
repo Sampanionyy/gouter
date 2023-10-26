@@ -18,7 +18,7 @@ export default function RegisterScreen({navigation }) {
     const handleRegister = async () => {
         // Vous pouvez utiliser l'objet utilisateur ici pour soumettre le
         console.log('Utilisateur enregistré :', utilisateur);
-        navigation.navigate('AuthScreen', { pseudo: utilisateur.username })
+        navigation.navigate('AuthScreen', { utilisateur: utilisateur })
     };
     
     const handleLinkPress = () => {
