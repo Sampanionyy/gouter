@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'rea
 import jsonUsers from '../../assets/json/users.json';
 import { useNavigation } from '@react-navigation/native'; // Importez useNavigation
 
-function AuthScreen({navigation}) {
+function AuthScreen({navigation, pseudo}) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 	const users = jsonUsers;
@@ -19,20 +19,25 @@ function AuthScreen({navigation}) {
 
     const handleLogin = () => {
 		let check = 0;
-		users.map((user) => {
-			if (username === user.username && password === user.password) {
-				// Authentification réussie, effectuez une action (redirection, etc.)
-				check == 1;
 
-				if(user.type == 1) { //Medecin
-					navigation.navigate('MedecinHomeScreen', { user: user.username });
-				}
-				else if (user.type == 2) {
-					navigation.navigate('PatientHomeScreen', user);
-				}
+		console.log(pseudo+"ee")
+		// if(username == utilisateur.username) {
+		// 	console.log("tafiditra")
+		// }
+		// users.map((user) => {
+		// 	if (username === user.username && password === user.password) {
+		// 		// Authentification réussie, effectuez une action (redirection, etc.)
+		// 		check == 1;
 
-			}
-		});
+		// 		if(user.type == 1) { //Medecin
+		// 			navigation.navigate('MedecinHomeScreen', { user: user.username });
+		// 		}
+		// 		else if (user.type == 2) {
+		// 			navigation.navigate('PatientHomeScreen', user);
+		// 		}
+
+		// 	}
+		// });
 
 		check ? console.log('Authentification réussie') : console.log('Authentification échouée');
     };

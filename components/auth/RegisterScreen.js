@@ -8,8 +8,7 @@ export default function RegisterScreen({navigation }) {
         name: '',
         email: '',
         username: '',
-        password: '',
-        type: null
+        password: ''
     });
     const handleChange = (text, champ) => {
         //ici
@@ -19,8 +18,7 @@ export default function RegisterScreen({navigation }) {
     const handleRegister = async () => {
         // Vous pouvez utiliser l'objet utilisateur ici pour soumettre le
         console.log('Utilisateur enregistré :', utilisateur);
-        if (utilisateur.type == 1) navigation.navigate('MedecinHomeScreen', { utilisateur });
-        else navigation.navigate('PatientHomeScreen', { utilisateur });
+        navigation.navigate('AuthScreen', { pseudo: utilisateur.username })
     };
     
     const handleLinkPress = () => {
@@ -64,13 +62,6 @@ export default function RegisterScreen({navigation }) {
 				secureTextEntry={true} // Pour masquer le mot de passe
             >
             </TextInput>
-            <Picker
-                selectedValue={utilisateur.type}
-                onValueChange={(itemValue, itemIndex) => handleChange(itemValue, 'type')}
-            >
-                <Picker.Item label="Medecin" value="1"/>
-                <Picker.Item label="Patient" value="2"/>
-            </Picker>
     
             <Button title="S'inscrire" onPress={handleRegister}></Button>
 

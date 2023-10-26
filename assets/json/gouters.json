@@ -1,0 +1,21 @@
+[
+    {
+      "id": 1,
+      "name": "Cacapigeon",
+      "image": "assets\images\cacapigeon.webp",
+      "prix": 1000
+    },
+    {
+      "id": 2,
+      "name": "Mofo ravina",
+      "image": "assets\images\mofo_ravina.jpg",
+      "prix": 1500
+    },
+    {
+      "id": 3,
+      "name": "Nem",
+      "image": "assets\images\nem.jpg",
+      "prix": 800
+    }
+  ]
+  
