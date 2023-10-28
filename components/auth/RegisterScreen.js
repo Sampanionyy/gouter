@@ -4,7 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 
 export default function RegisterScreen({navigation }) {
     const [utilisateur, setUtilisateur] = useState({
-        id: 1,
+        id: 0,
         name: '',
         email: '',
         username: '',
@@ -23,7 +23,7 @@ export default function RegisterScreen({navigation }) {
     
     const handleLinkPress = () => {
         // Vous pouvez utiliser navigation.navigate pour naviguer vers une autre vue
-        navigation.navigate('AuthScreen');
+        navigation.navigate('AuthScreen', { utilisateur: utilisateur });
     };
 
     return (

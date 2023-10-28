@@ -22,28 +22,25 @@ function AuthScreen({route, navigation}) {
 		let check = 0;
 
 		// console.log(utilisateur)
-		if(username == utilisateur.username && password === utilisateur.password) {
-			console.log("tafiditra")
-			navigation.navigate('Home', { utilisateur: utilisateur });
-			check = 1;
+		if(utilisateur.name != '') { //Si apres inscription
+			if(username == utilisateur.username && password === utilisateur.password) {
+				console.log("tafiditra")
+				navigation.navigate('Home', { utilisateur: utilisateur });
+				check = 1;
+			}
+			else {
+				console.log("misy olana")
+			}
 		}
-		else {
-			console.log("misy olana")
+		else { //Si pas après inscription
+			users.map((user) => {
+				if (username === user.username && password === user.password) {
+					// Authentification réussie, effectuez une action (redirection, etc.)
+					navigation.navigate('Home', { utilisateur: utilisateur });
+					check == 1;
+				}
+			});
 		}
-		// users.map((user) => {
-		// 	if (username === user.username && password === user.password) {
-		// 		// Authentification réussie, effectuez une action (redirection, etc.)
-		// 		check == 1;
-
-		// 		if(user.type == 1) { //Medecin
-		// 			navigation.navigate('MedecinHomeScreen', { user: user.username });
-		// 		}
-		// 		else if (user.type == 2) {
-		// 			navigation.navigate('PatientHomeScreen', user);
-		// 		}
-
-		// 	}
-		// });
 
 		check ? console.log('Authentification réussie') : console.log('Authentification échouée');
     };
