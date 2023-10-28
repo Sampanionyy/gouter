@@ -4,14 +4,16 @@
       "name": "John Doe",
       "email": "john@example.com",
       "username": "johnny07",
-      "password": "123456789"
+      "password": "123456789",
+      "type": 1
     },
     {
       "id": 2,
       "name": "Jane Smith",
       "email": "jane@example.com",
       "username": "janie",
-      "password": "123456789"
+      "password": "123456789",
+      "type": 2
     }
   ]
   

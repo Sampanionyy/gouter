@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import jsonUsers from '../../assets/json/users.json';
 import { useNavigation } from '@react-navigation/native'; // Importez useNavigation
 
-function AuthScreen() {
+function AuthScreen({route, navigation}) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 	const users = jsonUsers;
-	const navigation = useNavigation();
+	const utilisateur = route.params.utilisateur;
+	// const navigation = useNavigation();
 
     const handleUsernameChange = (text) => {
     	setUsername(text);
@@ -19,15 +20,34 @@ function AuthScreen() {
 
     const handleLogin = () => {
 		let check = 0;
-		users.map((user) => {
-			if (username === user.username && password === user.password) {
-				// Authentification réussie, effectuez une action (redirection, etc.)
+
+		// console.log(utilisateur)
+		if(utilisateur.name != '') { //Si apres inscription
+			if(username == utilisateur.username && password === utilisateur.password) {
+				console.log("tafiditra")
+				navigation.navigate('Home', { utilisateur: utilisateur });
 				check = 1;
 			}
-		});
+			else {
+				console.log("misy olana")
+			}
+		}
+		else { //Si pas après inscription
+			users.map((user) => {
+				if (username === user.username && password === user.password) {
+					// Authentification réussie, effectuez une action (redirection, etc.)
+					navigation.navigate('Home', { utilisateur: utilisateur });
+					check == 1;
+				}
+			});
+		}
 
 		check ? console.log('Authentification réussie') : console.log('Authentification échouée');
-		check ? navigation.navigate('Home', {username}) : "";
+    };
+
+	const handleLinkPress = () => {
+        // Vous pouvez utiliser navigation.navigate pour naviguer vers une autre vue
+        navigation.navigate('RegisterScreen');
     };
 
     return (
@@ -47,6 +67,9 @@ function AuthScreen() {
 				secureTextEntry={true} // Pour masquer le mot de passe
 			/>
 			<Button title="Se connecter" onPress={handleLogin} />
+			<TouchableOpacity onPress={handleLinkPress}>
+				<Text style={styles.notHavingAccount}>Je n'ai pas encore de compte</Text>
+			</TouchableOpacity>
 		</View>
     );
 }
@@ -69,6 +92,10 @@ const styles = StyleSheet.create({
 		marginBottom: 12,
 		paddingHorizontal: 8,
 	},
+	notHavingAccount: {
+        alignSelf: 'center',
+        marginTop: 5,
+    },
 	// container: {
 	// 	width: 60,
 	// 	display: 'flex',
