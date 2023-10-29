@@ -1,14 +1,18 @@
 //import liraries
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import React, { Component, useState } from 'react';
+import { View, Text, StyleSheet, Image, Button, ScrollView } from 'react-native';
 import goutersJson from '../../assets/json/gouters.json';
+import { useUser } from '../auth/UserContext';
 
 
 // create a component
 export default function ListeGouter () {
 	// const gouters = goutersJson;
+    const [contenuPanier, setContenuPanier] = useState([]);
+    const { utilisateurSt } = useUser();
 
-    const gouters = [
+    const gouters = 
+    [
         {
           "id": 1,
           "name": "Cacapigeon aux poivres verts",
@@ -28,38 +32,50 @@ export default function ListeGouter () {
           "prix": 800
         }
     ];
+
+    const goToPanier = () => {
+        console.log("first")
+    }
+
+    const ajouterAuPanier = (id) => {
+
+        const idUser = utilisateurSt.id;
+        const idGouter = id;
+
+        setContenuPanier(prevContenuPanier => [...prevContenuPanier, { idUser, idGouter }]);
+        console.log(contenuPanier);
+    }
       
     return (
-        <View style={styles.container}>
-        <Text style={styles.titre}>Liste des goûters</Text>
-        <View style={styles.blocListe}>
-            {gouters.map(function(gouter, index) {
-                return (
-                    <View key={index} style={styles.liste}>
-                        <View>
-                            <Text>{gouter.name}</Text>
-                            <Text>{gouter.prix}Ar</Text>
+        <ScrollView style={styles.container}>
+            <Button title="Voir votre panier" style={styles.button} onPress={goToPanier}></Button>
+            <Text style={styles.titre}>Liste des goûters</Text>
+            <View style={styles.blocListe}>
+                {gouters.map(function(gouter, index) {
+                    return (
+                        <View style={styles.liste}>
+                            <View key={index} style={styles.body}>
+                                <View style={styles.texte}>
+                                    <Text>{gouter.name}</Text>
+                                    <Text>{gouter.prix}Ar</Text>
+                                </View>
+                                <View style={styles.viewImage}>
+                                    <Image source={gouter.image} style={styles.image}></Image>
+                                </View>
+                            </View>
+                            <View style={styles.footer}>
+                                <Button title="Ajouter au panier" onPress={() => ajouterAuPanier(gouter.id)} style={styles.ajouter}></Button>
+                            </View>
                         </View>
-                        <View style={styles.viewImage} >
-                            <Image source={gouter.image} style={styles.image}></Image>
-                        </View>
-                    </View>
-                );
-            })}
-        </View>
-    </View>
-
+                    );
+                })}
+            </View>
+        </ScrollView >
     );
 };
 
 // define your styles
 const styles = StyleSheet.create({
-    // container: {
-    //     flex: 1,
-    //     justifyContent: 'center',
-    //     alignItems: 'center',
-    //     backgroundColor: '#2c3e50',
-    // },
     titre: {
         fontSize: 24,
         textAlign: 'center',
@@ -78,7 +94,13 @@ const styles = StyleSheet.create({
         borderColor: 'blue',
         borderRadius: 2,
         width: '90%',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        padding: 10
+    },
+    body: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     image: {
         width: 100, // Largeur de l'image en points (pixels)
@@ -90,6 +112,12 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         display: 'flex',
         alignSelf: 'flex-end'
+    },
+    footer:{
+        marginTop: 15,
+    },
+    ajouter:{
+        backgroundColor: 'green'
     }
 
 });

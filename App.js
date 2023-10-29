@@ -7,19 +7,22 @@ import HomeScreen from './components/HomeScreen';
 import AuthScreen from './components/auth/AuthScreen';
 import RegisterScreen from './components/auth/RegisterScreen';
 import ListeGouter from './components/utilisateur/ListeGouterScreen';
+import { UserProvider } from './components/auth/UserContext';
 
 const Stack = createStackNavigator();
 
 function App() {
 	return (
-		<NavigationContainer>
-			<Stack.Navigator initialRouteName="RegisterScreen">
-				<Stack.Screen name="Home" component={HomeScreen} />
-				<Stack.Screen name="AuthScreen" component={AuthScreen} />
-				<Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-				<Stack.Screen name="ListeGouter" component={ListeGouter} />
-			</Stack.Navigator>
-		</NavigationContainer>
+		<UserProvider>
+			<NavigationContainer>
+				<Stack.Navigator initialRouteName="RegisterScreen">
+					<Stack.Screen name="Home" component={HomeScreen} />
+					<Stack.Screen name="AuthScreen" component={AuthScreen} />
+					<Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+					<Stack.Screen name="ListeGouter" component={ListeGouter} />
+				</Stack.Navigator>
+			</NavigationContainer>
+		</UserProvider>
 	);
 }
 

@@ -2,28 +2,31 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import jsonUsers from '../../assets/json/users.json';
 import { useNavigation } from '@react-navigation/native'; // Importez useNavigation
+import { useUser } from './UserContext';
 
 function AuthScreen({route, navigation}) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-	const users = jsonUsers;
-	const utilisateur = route.params.utilisateur;
+	const {utilisateurSt, setUtilisateurSt } = useUser(); 
+	
+	// Utilisez le contexte global
+	const users = jsonUsers; //liste déjà existante dans fichier json
+	const utilisateur = route.params.utilisateur; //par l'inscription
+
 	// const navigation = useNavigation();
 
-    const handleUsernameChange = (text) => {
-    	setUsername(text);
-    };
+	const handleChange = (text, champ) => {
+        //ici
+        setUtilisateurSt({...utilisateurSt, [champ]: text})
 
-    const handlePasswordChange = (text) => {
-    	setPassword(text);
+		const userWithUsername = users.filter(user => user.username === utilisateurSt.username)[0];
+        setUtilisateurSt({...userWithUsername, [champ]: text})
     };
 
     const handleLogin = () => {
 		let check = 0;
 
-		// console.log(utilisateur)
+		// console.log(utilisateurSt)
 		if(utilisateur.name != '') { //Si apres inscription
-			if(username == utilisateur.username && password === utilisateur.password) {
+			if(utilisateurSt.username == utilisateur.username && utilisateurSt.password === utilisateur.password) {
 				console.log("tafiditra")
 				navigation.navigate('Home', { utilisateur: utilisateur });
 				check = 1;
@@ -34,9 +37,9 @@ function AuthScreen({route, navigation}) {
 		}
 		else { //Si pas après inscription
 			users.map((user) => {
-				if (username === user.username && password === user.password) {
+				if (utilisateurSt.username === user.username && utilisateurSt.password === user.password) {
 					// Authentification réussie, effectuez une action (redirection, etc.)
-					navigation.navigate('Home', { utilisateur: utilisateur });
+					navigation.navigate('Home', { utilisateur: user });
 					check == 1;
 				}
 			});
@@ -56,14 +59,14 @@ function AuthScreen({route, navigation}) {
 			<TextInput
 				style={styles.input}
 				placeholder="Nom d'utilisateur"
-				onChangeText={handleUsernameChange}
-				value={username}
+                onChangeText={(text) => handleChange(text, 'username')}
+				value={utilisateurSt.username}
 			/>
 			<TextInput
 				style={styles.input}
 				placeholder="Mot de passe"
-				onChangeText={handlePasswordChange}
-				value={password}
+                onChangeText={(text) => handleChange(text, 'password')}
+				value={utilisateurSt.password}
 				secureTextEntry={true} // Pour masquer le mot de passe
 			/>
 			<Button title="Se connecter" onPress={handleLogin} />

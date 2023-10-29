@@ -1,17 +1,8 @@
 import React, { useState } from 'react';
-<<<<<<< HEAD
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import jsonUsers from '../../assets/json/users.json';
-import * as FileSystem from 'expo-file-system'
-
-export default function RegisterScreen() {
-	const users = jsonUsers;
-=======
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 export default function RegisterScreen({navigation }) {
->>>>>>> sampaniony
     const [utilisateur, setUtilisateur] = useState({
         id: 0,
         name: '',
@@ -26,37 +17,9 @@ export default function RegisterScreen({navigation }) {
     };
 
     const handleRegister = async () => {
-<<<<<<< HEAD
-        // Vous pouvez utiliser l'objet utilisateur ici pour soumettre les données.
-        console.log('Utilisateur enregistré :', utilisateur);
-        const jsonFilePath = `${FileSystem.documentDirectory}/users.json`; // Chemin de destination dans le répertoire de documents
-
-        if (jsonFilePath.exists) {
-            console.log("OK")
-        } else {
-            console.log('Le fichier n\'existe pas.');
-        }
-        // try {
-        //     const jsonFilePath = `${FileSystem.documentDirectory}/${users}`;
-
-        //     if (fileInfo.exists) {
-        //         console.log("OK")
-        //     } else {
-        //         console.log('Le fichier n\'existe pas.');
-        //     }
-        //     // const existingData = await FileSystem.readAsStringAsync(jsonFilePath);
-        //     // const parsedData = JSON.parse(existingData);
-
-        //     // console.log(parsedData);
-        // }
-        // catch (erreur) {
-        //     console.log('Erreur produite')
-        // }
-=======
         // Vous pouvez utiliser l'objet utilisateur ici pour soumettre le
         console.log('Utilisateur enregistré :', utilisateur);
         navigation.navigate('AuthScreen', { utilisateur: utilisateur })
->>>>>>> sampaniony
     };
     
     const handleLinkPress = () => {
@@ -109,11 +72,6 @@ export default function RegisterScreen({navigation }) {
         </View>
     )
 }
-<<<<<<< HEAD
-
-const styles = StyleSheet.create({
-    input: {
-=======
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -130,19 +88,12 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
 	input: {
->>>>>>> sampaniony
 		height: 40,
 		borderColor: 'gray',
 		borderWidth: 1,
 		marginBottom: 12,
 		paddingHorizontal: 8,
 	},
-<<<<<<< HEAD
-    container: {
-        padding: '2rem',
-    }
-})
-=======
 	// container: {
 	// 	width: 60,
 	// 	display: 'flex',
@@ -155,4 +106,3 @@ const styles = StyleSheet.create({
 	// }
 });
 
->>>>>>> sampaniony
