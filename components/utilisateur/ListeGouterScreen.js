@@ -1,48 +1,41 @@
 //import liraries
 import React, { Component, useState } from 'react';
-import { View, Text, StyleSheet, Image, Button, ScrollView } from 'react-native';
-import goutersJson from '../../assets/json/gouters.json';
+import { View, Text, StyleSheet, Image, Button, ScrollView, TextInput } from 'react-native';
+// import goutersJson from '../../assets/json/gouters.json';
 import { useUser } from '../auth/UserContext';
 
 
 // create a component
-export default function ListeGouter () {
+export default function ListeGouter ({navigation}) {
 	// const gouters = goutersJson;
-    const [contenuPanier, setContenuPanier] = useState([]);
-    const { utilisateurSt } = useUser();
+    const { contenuPanier, setContenuPanier } = useUser();
+    const [qteValues, setQteValues] = useState({}); // état pour stocker les valeurs qte
 
-    const gouters = 
-    [
-        {
-          "id": 1,
-          "name": "Cacapigeon aux poivres verts",
-          "image": require("../../assets/images/cacapigeon.webp"),
-          "prix": 1000
-        },
-        {
-          "id": 2,
-          "name": "Mofo ravina",
-          "image": require("../../assets/images/mofo_ravina.jpg"),
-          "prix": 1500
-        },
-        {
-          "id": 3,
-          "name": "Nem",
-          "image": require("../../assets/images/nem.jpg"),
-          "prix": 800
-        }
-    ];
+    const { utilisateurSt } = useUser();
+    const { gouters } = useUser();
+    
 
     const goToPanier = () => {
         console.log("first")
+        navigation.navigate("Panier");
     }
 
     const ajouterAuPanier = (id) => {
-
         const idUser = utilisateurSt.id;
         const idGouter = id;
 
-        setContenuPanier(prevContenuPanier => [...prevContenuPanier, { idUser, idGouter }]);
+        const qte = qteValues[id] || 1; // Utilisez la valeur correspondante de qte
+        const quantitePrecedente = contenuPanier.find(item => item.idUser === idUser && item.idGouter === idGouter);
+
+        if (quantitePrecedente) {
+            setQteValues(prevQteValues => ({
+                ...prevQteValues,
+                [id]: (prevQteValues[id] || 0) + (quantitePrecedente ? quantitePrecedente.qte : 0)
+            }));
+
+        }
+
+        setContenuPanier(prevContenuPanier => [...prevContenuPanier, { idUser, idGouter, qte }]);
         console.log(contenuPanier);
     }
       
@@ -51,10 +44,10 @@ export default function ListeGouter () {
             <Button title="Voir votre panier" style={styles.button} onPress={goToPanier}></Button>
             <Text style={styles.titre}>Liste des goûters</Text>
             <View style={styles.blocListe}>
-                {gouters.map(function(gouter, index) {
+                {gouters.map(function (gouter, index) {
                     return (
-                        <View style={styles.liste}>
-                            <View key={index} style={styles.body}>
+                        <View style={styles.liste} key={index}>
+                            <View style={styles.body}>
                                 <View style={styles.texte}>
                                     <Text>{gouter.name}</Text>
                                     <Text>{gouter.prix}Ar</Text>
@@ -64,13 +57,23 @@ export default function ListeGouter () {
                                 </View>
                             </View>
                             <View style={styles.footer}>
+                                <TextInput
+                                    placeholder="Qte"
+                                    value={qteValues[gouter.id] ? qteValues[gouter.id].toString() : null}
+                                    onChangeText={(number) =>
+                                        setQteValues((prevQteValues) => ({
+                                            ...prevQteValues,
+                                            [gouter.id]: Number(number)
+                                        }))
+                                    }
+                                />
                                 <Button title="Ajouter au panier" onPress={() => ajouterAuPanier(gouter.id)} style={styles.ajouter}></Button>
                             </View>
                         </View>
                     );
                 })}
             </View>
-        </ScrollView >
+        </ScrollView>
     );
 };
 

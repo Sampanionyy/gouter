@@ -8,6 +8,7 @@ import AuthScreen from './components/auth/AuthScreen';
 import RegisterScreen from './components/auth/RegisterScreen';
 import ListeGouter from './components/utilisateur/ListeGouterScreen';
 import { UserProvider } from './components/auth/UserContext';
+import Panier from './components/utilisateur/PanierScreen';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ function App() {
 					<Stack.Screen name="AuthScreen" component={AuthScreen} />
 					<Stack.Screen name="RegisterScreen" component={RegisterScreen} />
 					<Stack.Screen name="ListeGouter" component={ListeGouter} />
+					<Stack.Screen name="Panier" component={Panier} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		</UserProvider>
