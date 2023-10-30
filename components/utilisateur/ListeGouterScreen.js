@@ -10,34 +10,47 @@ export default function ListeGouter ({navigation}) {
 	// const gouters = goutersJson;
     const { contenuPanier, setContenuPanier } = useUser();
     const [qteValues, setQteValues] = useState({}); // état pour stocker les valeurs qte
+    
 
     const { utilisateurSt } = useUser();
     const { gouters } = useUser();
     
 
     const goToPanier = () => {
-        console.log("first")
         navigation.navigate("Panier");
     }
 
     const ajouterAuPanier = (id) => {
         const idUser = utilisateurSt.id;
         const idGouter = id;
-
-        const qte = qteValues[id] || 1; // Utilisez la valeur correspondante de qte
-        const quantitePrecedente = contenuPanier.find(item => item.idUser === idUser && item.idGouter === idGouter);
-
-        if (quantitePrecedente) {
-            setQteValues(prevQteValues => ({
-                ...prevQteValues,
-                [id]: (prevQteValues[id] || 0) + (quantitePrecedente ? quantitePrecedente.qte : 0)
-            }));
-
+        const qte = qteValues[id] || 1; 
+    
+        // Trouver l'indice de l'élément existant dans contenuPanier s'il existe
+        const existingItemIndex = contenuPanier.findIndex(item => item.idUser === idUser && item.idGouter === idGouter);
+    
+        if (existingItemIndex !== -1) {
+            // Si l'élément existe, mettre à jour la quantité en ajoutant la nouvelle quantité
+            const updatedContenuPanier = [...contenuPanier];
+            updatedContenuPanier[existingItemIndex] = {
+                ...contenuPanier[existingItemIndex],
+                qte: contenuPanier[existingItemIndex].qte + qte
+            };
+            setContenuPanier(updatedContenuPanier);
+        } else {
+            // Sinon, + l'élément au panier
+            setContenuPanier(prevContenuPanier => [
+                ...prevContenuPanier,
+                { idUser, idGouter, qte }
+            ]);
         }
-
-        setContenuPanier(prevContenuPanier => [...prevContenuPanier, { idUser, idGouter, qte }]);
-        console.log(contenuPanier);
+    
+        // Mise à jour de qteValues
+        setQteValues(prevQteValues => ({
+            ...prevQteValues,
+            [id]: ''
+        }));
     }
+    
       
     return (
         <ScrollView style={styles.container}>
@@ -49,8 +62,11 @@ export default function ListeGouter ({navigation}) {
                         <View style={styles.liste} key={index}>
                             <View style={styles.body}>
                                 <View style={styles.texte}>
-                                    <Text>{gouter.name}</Text>
+                                    <Text style={styles.titreGouter}>{gouter.name}</Text>
                                     <Text>{gouter.prix}Ar</Text>
+                                    <ScrollView style={styles.ingredients}>
+                                        <Text><Text style={styles.toTextBold}>Ingrédients:</Text> {gouter.ingredients}</Text>
+                                    </ScrollView>
                                 </View>
                                 <View style={styles.viewImage}>
                                     <Image source={gouter.image} style={styles.image}></Image>
@@ -60,6 +76,7 @@ export default function ListeGouter ({navigation}) {
                                 <TextInput
                                     placeholder="Qte"
                                     value={qteValues[gouter.id] ? qteValues[gouter.id].toString() : null}
+                                    keyboardType="numeric"
                                     onChangeText={(number) =>
                                         setQteValues((prevQteValues) => ({
                                             ...prevQteValues,
@@ -79,6 +96,19 @@ export default function ListeGouter ({navigation}) {
 
 // define your styles
 const styles = StyleSheet.create({
+    titreGouter: {
+        fontSize: 18,
+        maxWidth: 150
+    },  
+    toTextBold: {
+        fontWeight: 'bold',
+        color: 'green'
+    },  
+    ingredients: {
+        flex: 1,
+        flexWrap: 'wrap',
+        maxWidth: 150,
+    },
     titre: {
         fontSize: 24,
         textAlign: 'center',
