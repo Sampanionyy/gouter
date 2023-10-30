@@ -5,15 +5,15 @@
       "email": "john@example.com",
       "username": "johnny07",
       "password": "123",
-      "type": 1
+      "type": "ach"
     },
     {
       "id": 2,
       "name": "Jane Smith",
       "email": "jane@example.com",
       "username": "janie",
-      "password": "123456789",
-      "type": 2
+      "password": "123",
+      "type": "vend"
     }
   ]
   

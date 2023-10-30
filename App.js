@@ -9,6 +9,8 @@ import RegisterScreen from './components/auth/RegisterScreen';
 import ListeGouter from './components/utilisateur/ListeGouterScreen';
 import { UserProvider } from './components/auth/UserContext';
 import Panier from './components/utilisateur/PanierScreen';
+import DeconnexionButton from './components/auth/Deconnexion';
+import HomeVendeur from './components/vendeur/HomeVendeurScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +24,8 @@ function App() {
 					<Stack.Screen name="RegisterScreen" component={RegisterScreen} />
 					<Stack.Screen name="ListeGouter" component={ListeGouter} />
 					<Stack.Screen name="Panier" component={Panier} />
+					<Stack.Screen name="Deconnexion" component={DeconnexionButton} />
+					<Stack.Screen name="HomeVendeur" component={HomeVendeur} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		</UserProvider>

@@ -24,11 +24,15 @@ function AuthScreen({route, navigation}) {
     const handleLogin = () => {
 		let check = 0;
 
-		// console.log(utilisateurSt)
+		console.log(utilisateur)
 		if(utilisateur.name != '') { //Si apres inscription
 			if(utilisateurSt.username == utilisateur.username && utilisateurSt.password === utilisateur.password) {
 				console.log("tafiditra")
-				navigation.navigate('Home', { utilisateur: utilisateur });
+				if(utilisateur.type == "ach") {
+					navigation.navigate('Home', { utilisateur: utilisateur });
+				} else if (utilisateur.type == "vend") {
+					navigation.navigate('HomeVendeur', { utilisateur: utilisateur });$
+				}
 				check = 1;
 			}
 			else {
@@ -38,8 +42,14 @@ function AuthScreen({route, navigation}) {
 		else { //Si pas après inscription
 			users.map((user) => {
 				if (utilisateurSt.username === user.username && utilisateurSt.password === user.password) {
-					// Authentification réussie, effectuez une action (redirection, etc.)
-					navigation.navigate('Home', { utilisateur: user });
+					// Authentification réussie, effectuer une action (redirection, etc.)
+
+					console.log(user.type)
+					if(user.type == "ach") {
+						navigation.navigate('Home', { utilisateur: user });
+					} else if (user.type == "vend") {
+						navigation.navigate('HomeVendeur', { utilisateur: user });$
+					}
 					check == 1;
 				}
 			});

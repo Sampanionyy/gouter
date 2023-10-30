@@ -3,6 +3,7 @@ import React, { Component, useState } from 'react';
 import { View, Text, StyleSheet, Image, Button, ScrollView, TextInput } from 'react-native';
 // import goutersJson from '../../assets/json/gouters.json';
 import { useUser } from '../auth/UserContext';
+import DeconnexionButton from '../auth/Deconnexion';
 
 
 // create a component
@@ -56,6 +57,7 @@ export default function ListeGouter ({navigation}) {
         <ScrollView style={styles.container}>
             <Button title="Voir votre panier" style={styles.button} onPress={goToPanier}></Button>
             <Text style={styles.titre}>Liste des goûters</Text>
+            <DeconnexionButton/>
             <View style={styles.blocListe}>
                 {gouters.map(function (gouter, index) {
                     return (
