@@ -14,6 +14,14 @@
       "username": "janie",
       "password": "123",
       "type": "vend"
+    },
+    {
+      "id": 3,
+      "name": "Marie Andria",
+      "email": "marie@example.com",
+      "username": "mar3",
+      "password": "123",
+      "type": "ach"
     }
   ]
   

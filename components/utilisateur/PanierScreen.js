@@ -46,33 +46,26 @@ export default function Panier ({navigation}) {
     }, 0);
 
     const ajouterCommande = () => {
-        // setCommande(contenuPanier, )
         const commandeFaite = {};
         contenuPanier.forEach((item) => {
-            const userId = item.idUser;
-            if (!commandeFaite[userId]) {
-                commandeFaite[userId] = [];
-            }
-            commandeFaite[userId].push({
-                "idGouter": item.idGouter,
-                "qte": item.qte
-            });
+          const userId = item.idUser;
+          if (!commandeFaite[userId]) {
+            commandeFaite[userId] = {
+              commentaire: commentaire,
+              status: 0, // En cours
+              items: [], 
+            };
+          }
+          commandeFaite[userId].items.push({
+            idGouter: item.idGouter,
+            qte: item.qte,
+          });
         });
-
-        for (const userId in commandeFaite) {
-            if (commandeFaite.hasOwnProperty(userId)) {
-                const comment = commentaire; 
-                const userGroup = commandeFaite[userId];
-
-                userGroup.forEach((item) => {
-                    item.commentaire = comment;
-                });
-            }
-        }
-
-        console.log(commandeFaite)
+      
+        console.log(commandeFaite);
         setCommande(commandeFaite);
-    }
+    };
+      
     return (
         <ScrollView style={styles.container}>
             <Text style={styles.titre}>Votre Panier</Text>

@@ -11,6 +11,7 @@ import { UserProvider } from './components/auth/UserContext';
 import Panier from './components/utilisateur/PanierScreen';
 import DeconnexionButton from './components/auth/Deconnexion';
 import HomeVendeur from './components/vendeur/HomeVendeurScreen';
+import Commande from './components/vendeur/CommandeScreen';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ function App() {
 					<Stack.Screen name="Panier" component={Panier} />
 					<Stack.Screen name="Deconnexion" component={DeconnexionButton} />
 					<Stack.Screen name="HomeVendeur" component={HomeVendeur} />
+					<Stack.Screen name="Commande" component={Commande} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		</UserProvider>

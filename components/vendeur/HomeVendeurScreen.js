@@ -1,25 +1,29 @@
-//import liraries
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, Button } from 'react-native';
+import { useUser } from '../auth/UserContext';
 
-// create a component
-const HomeVendeur = () => {
+export default function HomeVendeur({navigation}) {
+    const { utilisateurSt } = useUser();
+
     return (
         <View style={styles.container}>
-            <Text>HomeVendeur</Text>
+            <Text style={styles.title}>Bienvenue dans votre espace Vendeur <Text style={styles.titleBold}>{utilisateurSt ? utilisateurSt.username : ''}!</Text></Text>
+            <Button title="Voir les commandes" onPress={() => navigation.navigate('Commande')} color='purple'></Button>
         </View>
     );
-};
+}
 
-// define your styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#2c3e50',
     },
+    titleBold: {
+        fontWeight: 'bold'
+    },
+    title: {
+        fontSize: 24,
+        color: 'green',
+        textAlign: 'center'
+    }
 });
-
-//make this component available to the app
-export default HomeVendeur;

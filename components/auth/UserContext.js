@@ -41,7 +41,43 @@ export const UserProvider = ({ children }) => {
           "ingredients": "Viande hachée, Champignons noirs, sel, sucre, miel"
         }
     ]);
-    const [commande, setCommande] = useState([]);
+    const [commande, setCommande] = useState(
+    [
+        {"1": 
+            {
+                "commentaire": "Huile de colza uniquement svp",
+                "status": 0,
+                "idUser": "1",
+                "items": [
+                    {
+                        "idGouter": 3,
+                        "qte": 4
+                    },
+                    {
+                        "idGouter": 1,
+                        "qte": 10
+                    }
+                ]
+            }
+        },
+        {"3": 
+            {
+                "commentaire": "Pas de sucre ajouté",
+                "status": 0,
+                "idUser": "3",
+                "items": [
+                    {
+                        "idGouter": 1,
+                        "qte": 5
+                    },
+                    {
+                        "idGouter": 2,
+                        "qte": 15
+                    }
+                ]
+            }
+        }
+    ]);
 
 	return (
 		<UserContext.Provider value={{ utilisateurSt, setUtilisateurSt, contenuPanier, setContenuPanier, gouters, setGouters, commande, setCommande }}>
