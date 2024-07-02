@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { useUser } from './UserContext';
 
 export default function RegisterScreen({navigation }) {
     const [utilisateur, setUtilisateur] = useState({
@@ -12,15 +13,18 @@ export default function RegisterScreen({navigation }) {
         type: ''
     });
 
+    const {utilisateurSt, setUtilisateurSt } = useUser(); 
+
     const handleChange = (text, champ) => {
         //ici
         setUtilisateur({...utilisateur, [champ]: text})
-
+        setUtilisateurSt({...utilisateur, [champ]: text})
     };
 
     const handleRegister = async () => {
         
         console.log('Utilisateur enregistré :', utilisateur);
+        setUtilisateurSt(utilisateur);
         // navigation.navigate('AuthScreen', { utilisateur: utilisateur })
     };
     

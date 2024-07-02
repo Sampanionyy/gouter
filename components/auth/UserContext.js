@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
 		password: ''
 	}); 
 
-  const [contenuPanier, setContenuPanier] = useState([]);
+    const [contenuPanier, setContenuPanier] = useState([]);
 	const [gouters, setGouters] = useState(
     [
         {

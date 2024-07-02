@@ -24,7 +24,7 @@ function AuthScreen({route, navigation}) {
     const handleLogin = () => {
 		let check = 0;
 
-		console.log(utilisateur)
+		console.log(utilisateur, utilisateurSt)
 		if(utilisateur.name != '') { //Si apres inscription
 			if(utilisateurSt.username == utilisateur.username && utilisateurSt.password === utilisateur.password) {
 				console.log("tafiditra")
@@ -55,8 +55,13 @@ function AuthScreen({route, navigation}) {
 			});
 		}
 
-		check ? console.log('Authentification réussie') : console.log('Authentification échouée');
-    };
+		if(check) {
+			console.log('Authentification réussie') 
+			navigation.navigate('ListeGouter');
+		} else {
+			console.log('Authentification échouée');
+		}
+	};
 
 	const handleLinkPress = () => {
         // Vous pouvez utiliser navigation.navigate pour naviguer vers une autre vue
